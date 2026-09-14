@@ -42,6 +42,38 @@ lipo -create \
   -out ak500s
 ```
 
+## 版本升级（已部署过旧版本）
+
+```bash
+cd ~/ak500s-mac            # 你当时部署工程的目录
+git pull                    # 拉取新版本（若当初是 zip 拷贝部署，重新覆盖一次文件即可）
+
+# 1) 停掉正在运行的守护进程（二进制被占用时 Windows 无法覆盖，macOS 同样建议先停）
+./scripts/uninstall.sh      # 若装过 LaunchAgent 自启动，一并停掉
+pkill -f "ak500s-mac run"   # 前台运行的按 Ctrl+C；跳过已退出的报错
+
+# 2) 重新构建 + 自检
+cargo build --release
+./target/release/ak500s-mac doctor
+
+# 3) 恢复运行（前台验证一次，正常后再装回自启动）
+./target/release/ak500s-mac run
+./scripts/install.sh
+```
+
+配置文件 `~/.config/ak500s-mac/config` 与日志不受升级影响，无需改动。
+版本间行为变化见本节末「版本历史」。
+
+### 版本历史
+
+| 版本 | 变化 |
+|---|---|
+| 0.3.2 | 默认显示模式改为 **auto**（温度/占用率 10s 轮换）；auto 模式缺温度源时新增明确提示 |
+| 0.3.1 | 修复 SMC 读取的严重缺陷（温度读不到/句柄泄漏）；双实例防护；纯 API 模式停发改进 |
+| 0.3.0 | 新增内置指标显示开关（`config` 命令 / `--no-temp` / `--no-usage` / 配置键） |
+| 0.2.0 | 新增通用 API（本机套接字 NDJSON），外部软件可发布时间/token/进度等显示 |
+| 0.1.0 | 首版：温度/占用率显示、doctor 自检、LaunchAgent |
+
 ## 开机自启动
 
 ```bash
