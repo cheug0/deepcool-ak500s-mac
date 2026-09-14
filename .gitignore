@@ -1,0 +1,19 @@
+# 官方软件逆向产物（体积大、可再生，不入库；保留 analysis/*.py 脚本与 cab_extracted）
+analysis/asar_extracted/
+analysis/gccfix/
+analysis/package.json
+analysis/asar_list.txt
+
+# 参考项目（各自独立 git 仓库，需要时重新 clone）
+reference/
+
+# Rust 构建产物
+ak500s-mac/target/
+
+# 系统杂项
+.DS_Store
+Thumbs.db
+
+# DeepCool 专有二进制（版权原因不入库；本地保留）
+analysis/cab_extracted/
+analysis/embedded_0.cab
