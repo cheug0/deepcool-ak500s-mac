@@ -34,9 +34,15 @@ pub fn run(cfg: Config) -> Result<(), Box<dyn std::error::Error>> {
     if temp_key.is_none() {
         eprintln!("[警告] 读不到 CPU 温度（SMC 键探测全部失败）。");
         eprintln!("       黑苹果需安装 VirtualSMC + SMCProcessor（AMD 平台用 SMCAMDProcessor）。");
-        if cfg.mode == Mode::Temp {
-            eprintln!("       已自动降级为占用率模式。");
-            cfg.mode = Mode::Usage;
+        match cfg.mode {
+            Mode::Temp => {
+                eprintln!("       已自动降级为占用率模式。");
+                cfg.mode = Mode::Usage;
+            }
+            Mode::Auto => {
+                eprintln!("       auto 模式下温度半场不可用，实际将只显示占用率。");
+            }
+            Mode::Usage => {}
         }
     } else {
         eprintln!("[信息] 温度键: {}（℃）", temp_key.unwrap());

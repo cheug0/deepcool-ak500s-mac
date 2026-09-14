@@ -1,9 +1,9 @@
 //! ak500s-mac —— DeepCool AK500S DIGITAL 数显散热器的 macOS（黑苹果）驱动
 //!
 //! 用法：
-//!   ak500s run                       # 常驻：屏幕显示 CPU 温度（默认）
-//!   ak500s run --mode usage          # 显示 CPU 占用率
-//!   ak500s run --mode auto           # 温度/占用率轮换
+//!   ak500s run                       # 常驻：温度/占用率轮换（默认 auto）
+//!   ak500s run --mode temp           # 仅 CPU 温度
+//!   ak500s run --mode usage          # 仅 CPU 占用率
 //!   ak500s test --mode temp --value 47 --bar 5   # 发送固定报文验证链路
 //!   ak500s doctor                    # 环境自检（设备/温度键/采样）
 //!

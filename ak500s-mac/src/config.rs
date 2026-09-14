@@ -31,7 +31,7 @@ pub struct Config {
 impl Default for Config {
     fn default() -> Self {
         Self {
-            mode: Mode::Temp,
+            mode: Mode::Auto,
             fahrenheit: false,
             interval_ms: 1000,
             alarm_c: 90.0,
@@ -172,7 +172,7 @@ mod tests {
     fn defaults_and_unknown_keys() {
         let c = load_with("# 注释\nunknown=1\n");
         assert!(c.show_temp && c.show_usage);
-        assert_eq!(c.mode, Mode::Temp);
+        assert_eq!(c.mode, Mode::Auto); // 默认 auto（温度/占用率轮换）
     }
 
     #[test]

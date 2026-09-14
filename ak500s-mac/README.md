@@ -9,7 +9,7 @@ VID `0x3633` / PID `0x0004`，64 字节 HID Output Report，Report ID 16。
 
 ## 功能
 
-- 显示 **CPU 温度**（℃/℉）或 **CPU 占用率**，或 auto 模式两者轮换
+- 默认 **auto 模式**：CPU 温度（℃/℉）与占用率每 10s 轮换显示
 - 状态条跟随占用率；温度超阈值（默认 90℃）触发屏幕报警
 - **通用 API**：任意本机软件可发布显示内容（时间/LLM token/进度…），
   TTL 到期自动回落默认显示（协议见 `../docs/09-通用API接口设计.md`）
@@ -27,7 +27,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 cargo build --release
 ./target/release/ak500s-mac doctor     # 先自检
 ./target/release/ak500s-mac test --mode temp --value 47   # 链路测试（屏幕显示 47，数秒后消失属正常）
-./target/release/ak500s-mac run        # 常驻运行（默认温度模式）
+./target/release/ak500s-mac run        # 常驻运行（默认 auto：温度/占用率轮换）
 ```
 
 通用二进制（Intel + Apple Silicon 黑苹果）：
@@ -54,7 +54,7 @@ lipo -create \
 CLI 参数优先于配置文件 `~/.config/ak500s-mac/config`：
 
 ```
-mode=temp            # temp | usage | auto
+mode=auto            # auto（默认）| temp | usage
 unit=c               # c | f
 interval_ms=1000     # 刷新周期 300–3000（看门狗保护）
 alarm_c=90           # 报警阈值（℃）
