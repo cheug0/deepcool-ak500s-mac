@@ -35,7 +35,7 @@ impl Default for Config {
             fahrenheit: false,
             interval_ms: 1000,
             alarm_c: 90.0,
-            auto_switch_s: 10,
+            auto_switch_s: 5,
             show_temp: true,
             show_usage: true,
         }

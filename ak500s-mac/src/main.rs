@@ -48,7 +48,7 @@ enum Cmd {
         /// 报警阈值（℃）
         #[arg(long)]
         alarm_c: Option<f32>,
-        /// auto 模式子模式停留秒数
+        /// auto 模式子模式停留秒数（默认 5）
         #[arg(long)]
         auto_switch_s: Option<u64>,
         /// 关闭 CPU 温度采集显示（配置文件键 show_temp=false 等效）

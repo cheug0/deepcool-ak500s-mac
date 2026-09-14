@@ -9,7 +9,7 @@ VID `0x3633` / PID `0x0004`，64 字节 HID Output Report，Report ID 16。
 
 ## 功能
 
-- 默认 **auto 模式**：CPU 温度（℃/℉）与占用率每 10s 轮换显示
+- 默认 **auto 模式**：CPU 温度（℃/℉）与占用率每 5s 轮换显示
 - 状态条跟随占用率；温度超阈值（默认 90℃）触发屏幕报警
 - **通用 API**：任意本机软件可发布显示内容（时间/LLM token/进度…），
   TTL 到期自动回落默认显示（协议见 `../docs/09-通用API接口设计.md`）
@@ -68,7 +68,8 @@ cargo build --release
 
 | 版本 | 变化 |
 |---|---|
-| 0.3.2 | 默认显示模式改为 **auto**（温度/占用率 10s 轮换）；auto 模式缺温度源时新增明确提示 |
+| 0.3.3 | auto 轮换周期默认从 10s 缩短为 **5s**（`auto_switch_s` 可调） |
+| 0.3.2 | 默认显示模式改为 **auto**；auto 模式缺温度源时新增明确提示 |
 | 0.3.1 | 修复 SMC 读取的严重缺陷（温度读不到/句柄泄漏）；双实例防护；纯 API 模式停发改进 |
 | 0.3.0 | 新增内置指标显示开关（`config` 命令 / `--no-temp` / `--no-usage` / 配置键） |
 | 0.2.0 | 新增通用 API（本机套接字 NDJSON），外部软件可发布时间/token/进度等显示 |
@@ -90,7 +91,7 @@ mode=auto            # auto（默认）| temp | usage
 unit=c               # c | f
 interval_ms=1000     # 刷新周期 300–3000（看门狗保护）
 alarm_c=90           # 报警阈值（℃）
-auto_switch_s=10     # auto 模式子模式停留秒数
+auto_switch_s=5      # auto 模式子模式停留秒数（默认 5）
 show_temp=true       # CPU 温度采集显示开关
 show_usage=true      # CPU 占用率采集显示开关（全关=纯 API 屏幕模式）
 ```
